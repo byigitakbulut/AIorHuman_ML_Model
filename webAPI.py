@@ -41,7 +41,7 @@ def fetch_general_cc_by_data(rows=3000):
                 cleaned_data.append({
                     "text": abstract_text.replace("\n", " "),  # Özet
                     "title": title_text,  # AI üretimi için başlığı saklıyoruz
-                    "label": 0,  # 0 = İnsan
+                    "label": 0,
                     "source_license": "CC-BY (PLOS)"  # Hepsi CC-BY garantili
                 })
 
