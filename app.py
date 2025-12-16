@@ -3,8 +3,8 @@ import joblib
 
 app = Flask(__name__)
 
-# --- ÇOKLU MODEL YÜKLEME ---
-# Buraya 4. modeli ekliyoruz
+# modelleri yükle
+
 models = {
     'Logistic Regression': joblib.load('model_lr.pkl'),
     'Support Vector Machine (SVM)': joblib.load('model_svm.pkl'),
@@ -12,9 +12,11 @@ models = {
     'Random Forest': joblib.load('model_rf.pkl') # <-- YENİ
 }
 
+namePage = 'index.html'
+
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template(namePage)
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -22,7 +24,7 @@ def predict():
         gelen_metin = request.form['metin_kutusu']
         
         if not gelen_metin:
-            return render_template('index.html', sonuc=None)
+            return render_template(namePage, sonuc=None)
 
         results = []
 
@@ -48,7 +50,7 @@ def predict():
                 'color': color
             })
 
-        return render_template('index.html', results=results, metin=gelen_metin)
+        return render_template(namePage, results=results, metin=gelen_metin)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False, port=5001)
