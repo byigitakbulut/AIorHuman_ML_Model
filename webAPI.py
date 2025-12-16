@@ -4,7 +4,7 @@ import pandas as pd
 
 def fetch_general_cc_by_data(rows=3000):
     # PLOS API URL
-    base_url = "http://api.plos.org/search"
+    base_url = "https://api.plos.org/search"
 
     # Parametreler
     # q: '*:*' demek "her şey" demektir. doc_type:full ile tam makaleleri hedefliyoruz.
