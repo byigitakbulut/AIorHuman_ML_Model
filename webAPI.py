@@ -66,3 +66,13 @@ if not df_human.empty:
     print(f"\n{len(df_human)} adet CC-BY lisanslı makale 'human_data_general.csv' dosyasına kaydedildi.")
 else:
     print("Veri çekilemedi.")
+
+if __name__ == "__main__":
+    df_human = fetch_general_cc_by_data(rows=3500)
+
+    if not df_human.empty:
+        df_human = df_human.head(3000)
+        df_human.to_csv("human_data_general.csv", index=False)
+        print(f"\n{len(df_human)} adet CC-BY lisanslı makale kaydedildi.")
+    else:
+        print("Veri çekilemedi.")
