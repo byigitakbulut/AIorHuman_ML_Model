@@ -1,0 +1,18 @@
+[run]
+# Hangi dosyaların kapsama dahil edileceğini belirtir (opsiyonel ama iyidir)
+source = .
+
+# Test dosyalarını ve sanal ortam klasörlerini rapordan çıkar
+omit =
+    test_app.py
+    test_webAPI.py
+    */site-packages/*
+    */dist-packages/*
+    venv/*
+
+[report]
+# Bu satırları test edilmemiş sayma (Örn: if __name__ == .__main__.:)
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    def __repr__
