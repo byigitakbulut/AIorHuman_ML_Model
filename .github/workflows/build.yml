@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # SonarCloud için gerekli
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -24,18 +24,27 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          # Projenin çalışması için gerekenler ve test araçları
           pip install flask pandas scikit-learn joblib pytest pytest-cov requests
 
       - name: Run Tests and Generate Report
         run: |
-          # Testleri BURADA, sunucuda çalıştırıyoruz ki yollar doğru olsun
-          # test_webAPI internete çıkmasın diye hariç tutabiliriz veya mockladıysan kalabilir
-          pytest --cov=. --cov-report=xml --ignore=test_webAPI.py
+          # Testleri çalıştır ve coverage.xml oluştur
+          # -vv: Detaylı çıktı verir
+          pytest --cov=. --cov-report=xml --ignore=test_webAPI.py -vv
 
-      # SonarCloud taraması şimdi oluşan taze raporu okuyacak
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          # BU KISIM KRİTİK: Ayarları doğrudan buraya yazıyoruz
+          args: >
+            -Dsonar.projectKey=byigitakbulut_AIorHuman_ML_Model
+            -Dsonar.organization=byigitakbulut
+            -Dsonar.python.version=3.11
+            -Dsonar.sources=.
+            -Dsonar.tests=.
+            -Dsonar.test.inclusions=test_*.py
+            -Dsonar.exclusions=test_*.py,coverage.xml,*.csv,*.pkl,.github/**
+            -Dsonar.python.coverage.reportPaths=coverage.xml
