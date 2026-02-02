@@ -15,7 +15,8 @@ Projede akademik makale özetleri kullanılmıştır.
 - **Dil:** Python
 - **Kütüphaneler:** Scikit-learn, Pandas, NLTK, Matplotlib
 - **Vektörleştirme (Feature Extraction):** - **TF-IDF (Term Frequency-Inverse Document Frequency):** Kelimelerin metin içindeki önem ağırlıklarını hesaplamak için kullanıldı.
-- **Modeller:** - Naive Bayes (MultinomialNB)
+- **Modeller:**
+  - Naive Bayes (MultinomialNB)
   - Logistic Regression
   - Support Vector Machines (SVM)
   - Random Forest
