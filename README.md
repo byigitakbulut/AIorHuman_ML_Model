@@ -44,7 +44,7 @@ Projeyi yerel ortamınızda çalıştırmak için:
 
 1. **Repoyu klonlayın:**
    ```bash
-   git clone [https://github.com/byigitakbulut/AIorHuman_ML_Model.git]
+   git clone https://github.com/byigitakbulut/AIorHuman_ML_Model.git
 
 2. **Terminalde dosyayı açıp app.py dosyasını Python ile çalıştırın:**
    ```bash
