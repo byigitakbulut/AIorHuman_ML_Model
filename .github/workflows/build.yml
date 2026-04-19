@@ -1,0 +1,49 @@
+name: Build, Test and Analyze
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarcloud:
+    name: SonarCloud Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flask pandas scikit-learn joblib pytest pytest-cov requests
+
+      - name: Run Tests and Generate Report
+        run: |
+          # Testleri çalıştır ve coverage.xml oluştur
+          # -vv: Detaylı çıktı verir
+          pytest --cov=. --cov-report=xml --ignore=test_webAPI.py -vv
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=byigitakbulut_AIorHuman_ML_Model
+            -Dsonar.organization=byigitakbulut
+            -Dsonar.python.version=3.11
+            -Dsonar.sources=.
+            -Dsonar.tests=.
+            -Dsonar.test.inclusions=test_*.py
+            -Dsonar.exclusions=test_*.py,coverage.xml,*.csv,*.pkl,.github/**
+            -Dsonar.python.coverage.reportPaths=coverage.xml
